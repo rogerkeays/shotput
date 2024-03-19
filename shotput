@@ -9,7 +9,7 @@
 # paste the new credentials to the bottom of this script and run the script
 # again to generate an OTP. Each service may use a different password.
 # 
-# Note: requires `oathtool` and `openssl`.
+# Note: requires `oathtool >=2.6.6` and `openssl`.
 #
 
 CIPHER=aes-256-cbc
