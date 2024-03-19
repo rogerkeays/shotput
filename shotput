@@ -27,7 +27,7 @@ newkey() {
   echo $KEY | openssl enc -e -$CIPHER -pbkdf2 -base64 -A -in /dev/stdin
   if [ $? -eq 0 ]; then
     echo
-    echo "Copy and paste the new credentials to the end of $0:"
+    echo "Copy and paste the new credentials to the end of $CONFIG:"
     echo
   fi
 }
