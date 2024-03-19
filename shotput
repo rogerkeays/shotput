@@ -47,7 +47,7 @@ totp() {
 }
 
 #
-# include config file
+# Include config file.
 #
 . $CONFIG
 
