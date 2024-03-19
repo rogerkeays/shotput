@@ -37,7 +37,7 @@ newkey() {
 totp() {
   echo $1 | \
     openssl enc -d -$CIPHER -pbkdf2 -base64 -in /dev/stdin | \
-    oathtool --base32 --totp=${2:-SHA1} --time-step-size=${3:-30} -
+    oathtool --base32 --totp=${2:-sha1} --time-step-size=${3:-30} -
 }
 
 
