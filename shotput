@@ -1,0 +1,55 @@
+#!/bin/sh
+#
+# shotput: a portable shell script to generate TOTPs
+#
+# Usage: shotput [service]
+#
+# Generate an OTP for the given service. If [service] is not found, you will be
+# prompted to provide a new secret key and an encryption password. Copy and
+# paste the new credentials to the bottom of this script and run the script
+# again to generate an OTP. Each service may use a different password.
+# 
+# Note: requires `oathtool` and `openssl`.
+#
+
+CIPHER=aes-256-cbc
+
+#
+# Prompt for a new secret key and password.
+#
+newkey() {
+  echo -n "Enter a new secret key to encrypt: "
+  read KEY
+  echo $KEY | openssl enc -e -$CIPHER -pbkdf2 -base64 -A -in /dev/stdin
+  echo
+  echo "Copy and paste the new credentials to the end of $0:"
+  echo
+}
+
+
+#
+# Decrypt a secret key and generate a totp.
+#
+# $1 the encrypted secret key
+# $2 totp algorithm (default SHA1)
+# $3 totp timeout in seconds (default 30)
+#
+totp() {
+  echo $1 | \
+    openssl enc -d -$CIPHER -pbkdf2 -base64 -in /dev/stdin | \
+    oathtool --base32 --totp=${2:-SHA1} --time-step-size=${3:-30} -
+}
+
+
+#
+# Paste your encrypted secrets here. The correct format is:
+#
+#  service) totp BASE32ENCODEDKEY [ALGORITHM] [TIMEOUT] ;;
+#
+# [ALGORITHM] and [TIMEOUT] are optional. See the totp() function.
+#
+case "$1" in
+  example) totp U2FsdGVkX1+Q3pxqaPoRRWGDkQBPRbdHGoPm+krA/LjJh9MDQHe3SRqTurSZa3U8bXahov/e7HraSGiC1ygHzA== ;; # password is 'example'
+  *) newkey
+esac
+

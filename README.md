@@ -1,2 +1,4 @@
-# shotp
-A portable shell script to generate TOTPs
+# shotput
+
+SHell OTP UTopia: A portable shell script to generate TOTPs
+
