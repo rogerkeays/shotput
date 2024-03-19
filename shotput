@@ -6,13 +6,17 @@
 #
 # Generate an OTP for the given service. If [service] is not found, you will be
 # prompted to provide a new secret key and an encryption password. Copy and
-# paste the new credentials to the bottom of this script and run the script
-# again to generate an OTP. Each service may use a different password.
+# paste the new credentials to the config file in this directory or
+# $HOME/.config/shotput.conf
+#
+# Each service may use a different password.
 # 
 # Note: requires `oathtool >=2.6.6` and `openssl`.
 #
 
 CIPHER=aes-256-cbc
+CONFIG=$(dirname $0)/shotput.keys
+[ ! -f $CONFIG ] && CONFIG="$HOME/.config/shotput.keys"
 
 #
 # Prompt for a new secret key and password.
@@ -21,9 +25,11 @@ newkey() {
   echo -n "Enter a new secret key to encrypt: "
   read KEY
   echo $KEY | openssl enc -e -$CIPHER -pbkdf2 -base64 -A -in /dev/stdin
-  echo
-  echo "Copy and paste the new credentials to the end of $0:"
-  echo
+  if [ $? -eq 0 ]; then
+    echo
+    echo "Copy and paste the new credentials to the end of $0:"
+    echo
+  fi
 }
 
 
@@ -37,19 +43,11 @@ newkey() {
 totp() {
   echo $1 | \
     openssl enc -d -$CIPHER -pbkdf2 -base64 -in /dev/stdin | \
-    oathtool --base32 --totp=${2:-sha1} --time-step-size=${3:-30} -
+    oathtool --base32 --totp=${2:-sha1} --time-step-size=${3:-30s} -
 }
 
-
 #
-# Paste your encrypted secrets here. The correct format is:
+# include config file
 #
-#  service) totp BASE32ENCODEDKEY [ALGORITHM] [TIMEOUT] ;;
-#
-# [ALGORITHM] and [TIMEOUT] are optional. See the totp() function.
-#
-case "$1" in
-  example) totp U2FsdGVkX1+Q3pxqaPoRRWGDkQBPRbdHGoPm+krA/LjJh9MDQHe3SRqTurSZa3U8bXahov/e7HraSGiC1ygHzA== ;; # password is 'example'
-  *) newkey
-esac
+. $CONFIG
 

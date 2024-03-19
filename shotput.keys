@@ -1,0 +1,12 @@
+#
+# Paste your encrypted secrets here. The correct format is:
+#
+#  service) totp BASE32ENCODEDKEY [ALGORITHM] [TIMEOUT] ;;
+#
+# [ALGORITHM] and [TIMEOUT] are optional.
+#
+case "$1" in
+  example) totp U2FsdGVkX1+Q3pxqaPoRRWGDkQBPRbdHGoPm+krA/LjJh9MDQHe3SRqTurSZa3U8bXahov/e7HraSGiC1ygHzA== ;; # password is 'example'
+  *) newkey
+esac
+
