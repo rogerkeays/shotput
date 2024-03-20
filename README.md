@@ -82,7 +82,7 @@ This should produce an `otpauth://` URL which contains your secret key, and TOTP
 
 ## Related Resources
 
-  * [otpclient](https://https://github.com/paolostivanin/OTPClient): another linux OTP utility which includes a command line tool
+  * [otpclient](https://github.com/paolostivanin/OTPClient): another linux OTP utility which includes a command line tool
   * [otpauth](https://github.com/dim13/otpauth/): a tool which can convert Google Authenticator links to standard oauth secret keys
   * [How to use TOTP with Google accounts](https://webapps.stackexchange.com/questions/127464/enabling-2fa-on-a-google-account-how-to-get-totp-secret): being conventional is sometimes the right choice.
   * [How to extract TOTP secrets from the MyGov app](https://gist.github.com/hacker1024/5d0845863e2dced27fd5eebc4ac95a39): for Australians who are over installing government apps.
