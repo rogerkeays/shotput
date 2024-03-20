@@ -3,7 +3,7 @@
 # shotput: a portable shell script to generate TOTPs from the command line
 #
 
-[ "$1" ] || echo "
+if [ ! "$1" ]; then echo "
 Usage: shotput service [reveal]
 
 Generates an OTP for the given service. If the service is not found, you will
@@ -15,7 +15,7 @@ If [reveal] is specified, the secret key for the given service will be
 displayed, rather than generating an OTP.
 
 Note: requires oathtool >=2.6.6 and openssl.
-"; exit 1
+"; exit 1; fi
 
 CIPHER=aes-256-cbc
 CONFIG="$HOME/.config/shotput.keys"
