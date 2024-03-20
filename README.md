@@ -2,7 +2,19 @@
 
 A portable shell script to generate TOTPs from the command line.
 
-## Example Usage
+## Usage
+
+    shotput service [reveal]
+
+Generates an OTP for the given service. If the service is not found, you will
+be prompted to provide a new secret key and an encryption password. New
+secrets are added to the config file in `$HOME/.config/shotput.conf`. Each
+secret is encrypted seperately and may use a different password.
+
+If `reveal` is specified, the secret key for the given service will be
+displayed, rather than generating an OTP.
+
+## Examples
 
 Add a new TOTP secret:
 ```
