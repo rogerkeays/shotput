@@ -1,8 +1,7 @@
 #
-# Paste your encrypted secrets here and place this file in
-# $HOME/.config/shotput.keys
+# Encrypted TOTP secrets. Place this file in $HOME/.config/shotput.keys
 #
-# The format for new keys is:
+# The format for keys is:
 #
 #  service="BASE32ENCODEDKEY [ALGORITHM] [TIMEOUT]"
 #
