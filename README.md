@@ -39,3 +39,28 @@ GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ
 SHA512
 60
 ```
+
+## Installation
+
+shotput requires `oathtool >=2.6.6` and `openssl`:
+
+    sudo apt install oathtool openssl
+
+Place the `shotput` script on your path:
+
+    cd $HOME/bin
+    wget https://raw.githubusercontent.com/rogerkeays/shotput/main/shotput
+
+Or clone with github:
+
+    git clone https://github.com/rogerkeays/shotput.git
+
+## Legacy Systems (Debian 10)
+
+`shotput` can be made to work with older versions of `oathtool` that do not read from stdin. Replace `oathtool -` with `oathtool $(cat /dev/stdin)`. This is not recommended on multi-user systems, because the plain text secret key will be visible to `ps` and other tools while `oathtool` is running.
+
+## Related Resources
+
+  * [otpclient](https://): another linux otp utility which includes a command line tool
+  * [More stuff you never knew you wanted](https://rogerkeays.com).
+
