@@ -21,15 +21,28 @@ CONFIG=$(dirname $0)/shotput.keys
 #
 # Prompt for a new secret key and password.
 #
+# $1 the name of the service
+#
 newkey() {
-  echo -n "Enter a new secret key to encrypt: "
-  read KEY
-  echo $KEY | openssl enc -e -$CIPHER -pbkdf2 -base64 -A -in /dev/stdin
-  if [ $? -eq 0 ]; then
-    echo
-    echo "Copy and paste the new credentials to the end of $CONFIG:"
-    echo
+  SERVICE=$1
+  echo -n "Enter a new base32 secret key for $SERVICE:"
+  read SECRET
+  echo -n "Enter TOTP algorithm (default SHA1):"
+  read ALGORITHM
+  [ $ALGORITHM ] && PARAMS=" $ALGORITHM"
+  echo -n "Enter TOTP timeout (default 30s):"
+  read TIMEOUT
+  [ $TIMEOUT ] && PARAMS=" ${ALGORITHM:=sha1} $TIMEOUT"
+
+  # encrypt the new secret and write to the config file
+  KEY=$(echo $SECRET | openssl enc -e -$CIPHER -pbkdf2 -base64 -A -in /dev/stdin)
+  if [ $? -ne 0 ]; then
+    echo "Something went wrong: $KEY"
+    exit 1
   fi
+  PARAMS="$KEY$PARAMS"
+  echo $SERVICE=\"$PARAMS\" >> $CONFIG
+  echo "Encrypted secret key for $SERVICE and added to $CONFIG\n"
 }
 
 
@@ -46,9 +59,13 @@ totp() {
     oathtool --base32 --totp=${2:-sha1} --time-step-size=${3:-30s} -
 }
 
+
 # read the parameters from the config file
 . $CONFIG
-PARAMS=$(eval echo \$$1)
-[ ! $PARAMS ] && newkey
+SERVICE=$1
+PARAMS=$(eval echo \$$SERVICE)
+
+# generate a totp
+[ ! "$PARAMS" ] && newkey $SERVICE
 totp $PARAMS
 
