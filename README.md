@@ -8,7 +8,7 @@ A portable shell script to generate TOTPs from the command line.
 
 Generates an OTP for the given service. If the service is not found, you will
 be prompted to provide a new secret key and an encryption password. New
-secrets are added to the config file in `$HOME/.config/shotput.conf`. Each
+secrets are added to the config file in `$HOME/.config/shotput.keys`. Each
 secret is encrypted seperately and may use a different password.
 
 If `reveal` is specified, the secret key for the given service will be
@@ -69,7 +69,7 @@ Or clone with github:
 
 ## Extracting Secret Keys From QR Codes
 
-`zbarimg` can be used to decode any QR code. Save the QR code as an image file, and run:
+`zbarimg` can be used to decode QR codes. Save the QR code as an image file, and run:
 
     sudo apt install zbar-tools
     zbarimg $file
@@ -84,8 +84,8 @@ This should produce an `otpauth://` URL which contains your secret key, and TOTP
 
   * [otpclient](https://https://github.com/paolostivanin/OTPClient): another linux OTP utility which includes a command line tool
   * [otpauth](https://github.com/dim13/otpauth/): a tool which can convert Google Authenticator links to standard oauth secret keys
-  * [How to use TOTP with Google accounts](https://webapps.stackexchange.com/questions/127464/enabling-2fa-on-a-google-account-how-to-get-totp-secret): because Google is "not a conventional company".
-  * [How to extract TOTP secrets from the MyGov app](https://gist.github.com/hacker1024/5d0845863e2dced27fd5eebc4ac95a39): for Australians who are over installing broken apps.
-  * [python-vipacess](https://github.com/dlenski/python-vipaccess): can be used to provision a secret key for Symantec VIP Access without installing any apps.
+  * [How to use TOTP with Google accounts](https://webapps.stackexchange.com/questions/127464/enabling-2fa-on-a-google-account-how-to-get-totp-secret): hidden settings, because Google is "not a conventional company".
+  * [How to extract TOTP secrets from the MyGov app](https://gist.github.com/hacker1024/5d0845863e2dced27fd5eebc4ac95a39): for Australians who are over installing government apps.
+  * [python-vipacess](https://github.com/dlenski/python-vipaccess): a tool to provision secrets for Symantec VIP Access without installing any apps.
   * [More stuff you never knew you wanted](https://rogerkeays.com).
 
