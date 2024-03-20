@@ -24,5 +24,4 @@ enter aes-256-cbc decryption password:
 GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ
 SHA512
 60
-
 ```
