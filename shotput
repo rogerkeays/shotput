@@ -58,7 +58,7 @@ totp() {
 }
 
 
-# read the parameters from the config file
+# read the keys from the config file
 . $CONFIG
 SERVICE=$1
 PARAMS=$(eval echo \$$SERVICE)
