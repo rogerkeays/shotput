@@ -46,8 +46,9 @@ totp() {
     oathtool --base32 --totp=${2:-sha1} --time-step-size=${3:-30s} -
 }
 
-#
-# Include config code.
-#
+# read the parameters from the config file
 . $CONFIG
+PARAMS=$(eval echo \$$1)
+[ ! $PARAMS ] && newkey
+totp $PARAMS
 

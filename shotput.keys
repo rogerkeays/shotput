@@ -4,16 +4,12 @@
 #
 # The format for new keys is:
 #
-#  service) totp BASE32ENCODEDKEY [ALGORITHM] [TIMEOUT] ;;
+#  service="BASE32ENCODEDKEY [ALGORITHM] [TIMEOUT]"
 #
-# [ALGORITHM] and [TIMEOUT] are optional.
+# The default [ALGORITHM] is SHA1.
+# The default [TIMEOUT] is 30s.
 #
-case "$1" in
 
-  # add keys here, each one terminating with ;;
-  example) totp U2FsdGVkX1+Q3pxqaPoRRWGDkQBPRbdHGoPm+krA/LjJh9MDQHe3SRqTurSZa3U8bXahov/e7HraSGiC1ygHzA== ;; # password is 'example'
-
-  # leave this code
-  *) newkey
-esac
+# example secret: password is 'example'
+example="U2FsdGVkX1+Q3pxqaPoRRWGDkQBPRbdHGoPm+krA/LjJh9MDQHe3SRqTurSZa3U8bXahov/e7HraSGiC1ygHzA=="
 
