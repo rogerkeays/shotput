@@ -55,6 +55,15 @@ Or clone with github:
 
     git clone https://github.com/rogerkeays/shotput.git
 
+## Extracting Secret Keys From QR Codes
+
+`zbarimg` can be used to decode any QR code. Save the QR code as an image file, and run:
+
+    sudo apt install zbar-tools
+    zbarimg $file
+
+This should produce an `otpauth://` URL which contains your secret key, and TOTP parameters.
+
 ## Legacy Systems (Debian 10)
 
 `shotput` can be made to work with older versions of `oathtool` that do not read from stdin. Replace `oathtool -` with `oathtool $(cat /dev/stdin)`. This is not recommended on multi-user systems, because the plain text secret key will be visible to `ps` and other tools while `oathtool` is running.
@@ -62,5 +71,9 @@ Or clone with github:
 ## Related Resources
 
   * [otpclient](https://https://github.com/paolostivanin/OTPClient): another linux OTP utility which includes a command line tool
+  * [otpauth](https://github.com/dim13/otpauth/): a tool which can convert Google Authenticator links to standard oauth secret keys
+  * [How to use TOTP with Google accounts](https://webapps.stackexchange.com/questions/127464/enabling-2fa-on-a-google-account-how-to-get-totp-secret): because Google is "not a conventional company".
+  * [How to extract TOTP secrets from the MyGov app](https://gist.github.com/hacker1024/5d0845863e2dced27fd5eebc4ac95a39): for Australians who are over installing broken apps.
+  * [python-vipacess](https://github.com/dlenski/python-vipaccess): can be used to provision a secret key for Symantec VIP Access without installing any apps.
   * [More stuff you never knew you wanted](https://rogerkeays.com).
 
