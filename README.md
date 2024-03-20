@@ -61,6 +61,6 @@ Or clone with github:
 
 ## Related Resources
 
-  * [otpclient](https://): another linux otp utility which includes a command line tool
+  * [otpclient](https://https://github.com/paolostivanin/OTPClient): another linux OTP utility which includes a command line tool
   * [More stuff you never knew you wanted](https://rogerkeays.com).
 
