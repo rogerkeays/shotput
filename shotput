@@ -5,18 +5,16 @@
 # Usage: shotput [service]
 #
 # Generate an OTP for the given service. If [service] is not found, you will be
-# prompted to provide a new secret key and an encryption password. Copy and
-# paste the new credentials to the config file in this directory or
-# $HOME/.config/shotput.conf
-#
-# Each service may use a different password.
+# prompted to provide a new secret key and an encryption password. New secrets
+# are added to config file in $HOME/.config/shotput.conf . Each secret is
+# encrypted seperately and may use a different password.
 # 
 # Note: requires `oathtool >=2.6.6` and `openssl`.
 #
 
 CIPHER=aes-256-cbc
-CONFIG=$(dirname $0)/shotput.keys
-[ ! -f $CONFIG ] && CONFIG="$HOME/.config/shotput.keys"
+CONFIG="$HOME/.config/shotput.keys"
+[ -d $HOME/.config ] || mkdir $HOME/.config
 
 #
 # Prompt for a new secret key and password.
@@ -66,6 +64,6 @@ SERVICE=$1
 PARAMS=$(eval echo \$$SERVICE)
 
 # generate a totp
-[ ! "$PARAMS" ] && newkey $SERVICE
+[ "$PARAMS" ] || newkey $SERVICE
 totp $PARAMS
 
