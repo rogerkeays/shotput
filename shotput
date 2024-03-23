@@ -57,7 +57,7 @@ newkey() {
 # $2 totp algorithm (default SHA1)
 # $3 totp timeout in seconds (default 30)
 #
-totp() {
+genotp() {
   echo "$1" | encrypt -d | oathtool --base32 --totp=${2:-sha1} --time-step-size=${3:-30s} -
 }
 
@@ -86,6 +86,6 @@ PARAMS=$(eval echo \$$SERVICE)
 if [ "$2" = "reveal" ]; then
   reveal $PARAMS
 else
-  totp $PARAMS
+  genotp $PARAMS
 fi
 
