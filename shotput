@@ -17,7 +17,8 @@ displayed, rather than generating an OTP.
 Note: requires oathtool >=2.6.6 and openssl.
 "; exit 1; fi
 
-CIPHER=aes-256-cbc
+alias encrypt="openssl enc -aes-256-cbc -pbkdf2 -base64 -A -in /dev/stdin"
+
 CONFIG="$HOME/.config/shotput.keys"
 [ -d $HOME/.config ] || mkdir $HOME/.config
 
@@ -38,7 +39,7 @@ newkey() {
   [ $TIMEOUT ] && PARAMS=" ${ALGORITHM:=sha1} $TIMEOUT"
 
   # encrypt the new secret and write to the config file
-  KEY=$(echo $SECRET | openssl enc -e -$CIPHER -pbkdf2 -base64 -A -in /dev/stdin)
+  KEY=$(echo $SECRET | encrypt)
   if [ $? -ne 0 ]; then
     echo "Something went wrong: $KEY"
     exit 1
@@ -57,9 +58,7 @@ newkey() {
 # $3 totp timeout in seconds (default 30)
 #
 totp() {
-  echo "$1" | \
-    openssl enc -d -$CIPHER -pbkdf2 -base64 -in /dev/stdin | \
-    oathtool --base32 --totp=${2:-sha1} --time-step-size=${3:-30s} -
+  echo "$1" | encrypt -d | oathtool --base32 --totp=${2:-sha1} --time-step-size=${3:-30s} -
 }
 
 
@@ -71,7 +70,7 @@ totp() {
 # $3 totp timeout, if declared
 #
 reveal() {
-  echo "$1" | openssl enc -d -$CIPHER -pbkdf2 -base64 -in /dev/stdin
+  echo "$1" | encrypt -d
   [ "$2" ] && echo $2
   [ "$3" ] && echo $3
 }
